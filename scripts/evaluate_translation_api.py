@@ -1,27 +1,20 @@
 """
 evaluate_translation_api.py
 
-Evaluates NTD -> Standard Thai translation across GPT-4o, Gemini, Claude, and DeepSeek.
+Evaluates NTD -> Standard Thai translation across:
+    GPT-4o, Gemini 2.0 Flash, Claude Sonnet, DeepSeek-V3, ThaiLLM (Typhoon-S)
+
 Tests both zero-shot and few-shot conditions.
 Samples 50 CI and 50 CD items from your dataset.
 
 Usage:
-    python scripts/evaluate_translation_api.py --anthropic_key YOUR_KEY
-    python scripts/evaluate_translation_api.py --gemini_key YOUR_KEY
-    python scripts/evaluate_translation_api.py --openai_key YOUR_KEY
+    bash scripts/setup_keys.sh run         <- recommended (loads all keys)
     python scripts/evaluate_translation_api.py --deepseek_key YOUR_KEY
-
-Or set environment variables:
-    export ANTHROPIC_API_KEY=...
-    export GEMINI_API_KEY=...
-    export OPENAI_API_KEY=...
-    export DEEPSEEK_API_KEY=...
-    python scripts/evaluate_translation_api.py
 
 Results saved to:
     outputs/translation/results.jsonl       <- all raw outputs
     outputs/translation/summary.csv         <- ChrF scores per model/condition
-    outputs/translation/for_human_eval.csv  <- subset for your annotators
+    outputs/translation/for_human_eval.csv  <- sheet for your annotators
 """
 
 import os
@@ -37,12 +30,11 @@ from sacrebleu.metrics import CHRF as ChrF
 def flag_output(ntd_input: str, model_output: str) -> str:
     """
     Flags potentially problematic outputs for human reviewer attention.
-    Categories:
         OK             - looks like a normal translation
         EMPTY          - model returned nothing
         ECHO           - model repeated the input unchanged
         ECHO_REORDERED - same words as input, different order
-        NO_THAI        - output has no Thai characters (e.g. responded in English)
+        NO_THAI        - output has no Thai characters
         TOO_SHORT      - suspiciously short (less than 3 chars)
         TOO_LONG       - suspiciously long (model explained instead of translating)
         ERROR          - API call failed
@@ -123,10 +115,16 @@ def call_deepseek(prompt: str, system: str, api_key: str) -> str:
     return response.choices[0].message.content.strip()
 
 def call_thaillm(prompt: str, system: str, api_key: str) -> str:
+    """
+    ThaiLLM uses Typhoon-S-ThaiLLM-8B-Instruct hosted on ThaiSC supercomputer.
+    API is OpenAI-compatible but uses apikey header instead of Authorization.
+    Rate limits: 5 requests/second, 200 requests/minute.
+    """
     from openai import OpenAI
     client = OpenAI(
         api_key=api_key,
-        base_url="http://thaillm.or.th/api/typhoon/v1"
+        base_url="http://thaillm.or.th/api/typhoon/v1",
+        default_headers={"apikey": api_key},
     )
     response = client.chat.completions.create(
         model="/model",
@@ -140,13 +138,14 @@ def call_thaillm(prompt: str, system: str, api_key: str) -> str:
     return response.choices[0].message.content.strip()
 
 # ── Model registry ────────────────────────────────────────────────────────────
-# Add or remove models here — no other changes needed
+# To add a new model: add entry here and write a call_* function above.
 
 MODELS = {
     "gpt4o":    "GPT-4o",
     "gemini":   "Gemini 2.0 Flash",
     "claude":   "Claude Sonnet",
     "deepseek": "DeepSeek-V3",
+    "thaillm":  "ThaiLLM (Typhoon-S)",
 }
 
 API_CALLERS = {
@@ -154,7 +153,18 @@ API_CALLERS = {
     "gemini":   call_gemini,
     "claude":   call_claude,
     "deepseek": call_deepseek,
+    "thaillm":  call_thaillm,
 }
+
+# Quota error keywords per model — used to detect billing failures fast
+QUOTA_ERRORS = [
+    "insufficient_quota",
+    "429",
+    "credit balance is too low",
+    "Insufficient Balance",
+    "RESOURCE_EXHAUSTED",
+    "quota",
+]
 
 # ── Prompt builders ───────────────────────────────────────────────────────────
 
@@ -177,7 +187,7 @@ def build_few_shot_prompt(ntd_text: str, examples: list) -> str:
     """
     Few-shot: 5 example pairs shown before the target sentence.
     Tests whether examples help the model recognize and translate NTD better.
-    Examples are drawn from the training set, not the test set.
+    Examples are drawn from the training set (not the test set).
     """
     header = "ต่อไปนี้คือตัวอย่างการแปลภาษาเหนือเป็นภาษาไทยกลาง:\n\n"
     shots  = ""
@@ -215,7 +225,18 @@ def load_data(excel_path: str, n_per_type: int = 50, seed: int = 42):
     test_df = pd.concat([ci_test, cd_test])
 
     # Few-shot pool = CI items NOT in test set
-    few_shot_df = ci[~ci.index.isin(ci_test.index)]
+    few_shot_df       = ci[~ci.index.isin(ci_test.index)]
+    few_shot_examples = random.sample(
+        [
+            {
+                "id":       str(row.get("ID", "")),
+                "ntd":      str(row["Text_Northern"]).strip(),
+                "std_gold": str(row["Text_Standard_Thai"]).strip(),
+            }
+            for _, row in few_shot_df.iterrows()
+        ],
+        min(5, len(few_shot_df))
+    )
 
     def df_to_items(df):
         items = []
@@ -231,9 +252,7 @@ def load_data(excel_path: str, n_per_type: int = 50, seed: int = 42):
             })
         return items
 
-    test_items        = df_to_items(test_df)
-    few_shot_pool     = df_to_items(few_shot_df)
-    few_shot_examples = random.sample(few_shot_pool, min(5, len(few_shot_pool)))
+    test_items = df_to_items(test_df)
 
     print(f"Test set: {len(test_items)} items ({len(ci_test)} CI + {len(cd_test)} CD)")
     print(f"Few-shot examples: {len(few_shot_examples)}")
@@ -273,17 +292,17 @@ def run_evaluation(
 
             for i, item in enumerate(test_items):
 
-                # Build user prompt based on condition
+                # Build user prompt
                 if condition == "zero_shot":
                     prompt = build_zero_shot_prompt(item["ntd"])
                 else:
                     prompt = build_few_shot_prompt(item["ntd"], few_shot_examples)
 
-                # For CD items, prepend the original post as context
+                # Prepend post context for CD items
                 if item["context_type"] == "CD" and item["head_post"] not in ("", "nan"):
                     prompt = f"[โพสต์ต้นฉบับ]: {item['head_post']}\n" + prompt
 
-                # Call the API
+                # Call API
                 try:
                     output = caller(prompt, SYSTEM_PROMPT, keys[model_key])
                     flag   = flag_output(item["ntd"], output)
@@ -299,15 +318,15 @@ def run_evaluation(
                     print(f"  [{i+1}] ERROR for {item['id']}: {error_msg[:120]}")
 
                     # Stop immediately on quota/billing errors
-                    if any(kw in error_msg for kw in
-                           ["insufficient_quota", "429", "credit balance is too low",
-                            "Insufficient Balance"]):
+                    if any(kw.lower() in error_msg.lower() for kw in QUOTA_ERRORS):
                         print(f"  x Quota/billing error — skipping rest of {model_name}")
+                        print(f"    Top up at the relevant platform and retry.")
                         quota_error = True
-                        break
-
-                    output = ""
-                    flag   = "ERROR"
+                        output = ""
+                        flag   = "ERROR"
+                    else:
+                        output = ""
+                        flag   = "ERROR"
 
                 hypotheses.append(output)
                 references.append(item["std_gold"])
@@ -331,17 +350,26 @@ def run_evaluation(
                     "human_notes":              "",
                 })
 
-                time.sleep(delay)
+                if quota_error:
+                    break
+
+                # ThaiLLM has stricter rate limits — add extra delay
+                if model_key == "thaillm":
+                    time.sleep(max(delay, 0.5))
+                else:
+                    time.sleep(delay)
 
             if quota_error:
                 break
 
-            # ChrF score for this model/condition
+            # ChrF for this model/condition
             valid = [(h, r) for h, r in zip(hypotheses, references) if h]
             if valid:
                 h_valid, r_valid = zip(*valid)
                 score = chrf.corpus_score(list(h_valid), [list(r_valid)]).score
                 print(f"\n  ChrF score ({len(valid)} valid items): {score:.2f}")
+            else:
+                print(f"\n  No valid outputs to score.")
 
     return results
 
@@ -352,7 +380,7 @@ def save_results(results: list, output_dir: str):
         print("No results to save.")
         return
 
-    # 1. Full results JSONL
+    # 1. Full JSONL
     jsonl_path = os.path.join(output_dir, "results.jsonl")
     with open(jsonl_path, "w", encoding="utf-8") as f:
         for r in results:
@@ -408,25 +436,28 @@ def save_results(results: list, output_dir: str):
 
     # 4. Human evaluation CSV
     # Prioritize flagged items so annotators review failure cases first
-    flagged  = df[df["output_flag"] != "OK"]
+    flagged  = df[~df["output_flag"].isin(["OK", "ERROR"])]
     ok_items = df[df["output_flag"] == "OK"]
     n_flagged = min(15, len(flagged))
     n_ok      = min(30 - n_flagged, len(ok_items))
 
-    human_eval = pd.concat([
-        flagged.sample(n_flagged,  random_state=42) if n_flagged > 0 else pd.DataFrame(),
-        ok_items.sample(n_ok, random_state=42)      if n_ok      > 0 else pd.DataFrame(),
-    ])[[
-        "id", "context_type", "model", "condition", "output_flag",
-        "ntd_input", "std_gold", "model_output",
-        "human_score_accuracy", "human_score_naturalness",
-        "human_score_dialect_loss", "human_notes",
-    ]]
+    frames = []
+    if n_flagged > 0:
+        frames.append(flagged.sample(n_flagged, random_state=42))
+    if n_ok > 0:
+        frames.append(ok_items.sample(n_ok, random_state=42))
 
-    human_path = os.path.join(output_dir, "for_human_eval.csv")
-    human_eval.to_csv(human_path, index=False, encoding="utf-8-sig")
-    print(f"Human eval sheet -> {human_path}")
-    print(f"  ({n_flagged} flagged + {n_ok} OK items — flagged items prioritized)")
+    if frames:
+        human_eval = pd.concat(frames)[[
+            "id", "context_type", "model", "condition", "output_flag",
+            "ntd_input", "std_gold", "model_output",
+            "human_score_accuracy", "human_score_naturalness",
+            "human_score_dialect_loss", "human_notes",
+        ]]
+        human_path = os.path.join(output_dir, "for_human_eval.csv")
+        human_eval.to_csv(human_path, index=False, encoding="utf-8-sig")
+        print(f"Human eval sheet -> {human_path}")
+        print(f"  ({n_flagged} flagged + {n_ok} OK items — flagged items prioritized)")
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
@@ -434,24 +465,16 @@ def main():
     parser = argparse.ArgumentParser(
         description="Evaluate NTD->STD translation across multiple LLMs"
     )
-    parser.add_argument("--input",         default="data/Master_Dataset.xlsx",
-                        help="Path to your Excel dataset")
-    parser.add_argument("--n_per_type",    type=int,   default=50,
-                        help="Number of CI and CD items each to sample")
-    parser.add_argument("--output_dir",    default="outputs/translation",
-                        help="Where to save results")
-    parser.add_argument("--openai_key",    default=os.getenv("OPENAI_API_KEY"),
-                        help="OpenAI API key for GPT-4o")
-    parser.add_argument("--gemini_key",    default=os.getenv("GEMINI_API_KEY"),
-                        help="Google API key for Gemini")
-    parser.add_argument("--anthropic_key", default=os.getenv("ANTHROPIC_API_KEY"),
-                        help="Anthropic API key for Claude")
-    parser.add_argument("--deepseek_key",  default=os.getenv("DEEPSEEK_API_KEY"),
-                        help="DeepSeek API key for DeepSeek-V3")
-    parser.add_argument("--delay",         type=float, default=1.0,
-                        help="Seconds between API calls (avoid rate limits)")
-    parser.add_argument("--seed",          type=int,   default=42,
-                        help="Random seed for reproducibility")
+    parser.add_argument("--input",         default="data/Master_Dataset.xlsx")
+    parser.add_argument("--n_per_type",    type=int,   default=50)
+    parser.add_argument("--output_dir",    default="outputs/translation")
+    parser.add_argument("--openai_key",    default=os.getenv("OPENAI_API_KEY"))
+    parser.add_argument("--gemini_key",    default=os.getenv("GEMINI_API_KEY"))
+    parser.add_argument("--anthropic_key", default=os.getenv("ANTHROPIC_API_KEY"))
+    parser.add_argument("--deepseek_key",  default=os.getenv("DEEPSEEK_API_KEY"))
+    parser.add_argument("--thaillm_key",   default=os.getenv("THAILLM_API_KEY"))
+    parser.add_argument("--delay",         type=float, default=1.0)
+    parser.add_argument("--seed",          type=int,   default=42)
     args = parser.parse_args()
 
     keys = {
@@ -459,12 +482,14 @@ def main():
         "gemini":   args.gemini_key,
         "claude":   args.anthropic_key,
         "deepseek": args.deepseek_key,
+        "thaillm":  args.thaillm_key,
     }
 
-    # Report which models will run
-    for name, key in keys.items():
-        status = "ready" if key else "no key — will be skipped"
-        print(f"  {MODELS[name]}: {status}")
+    # Report status of each model
+    print("\n── Model status ─────────────────────────────────")
+    for model_key, model_name in MODELS.items():
+        status = "ready" if keys.get(model_key) else "no key — will be skipped"
+        print(f"  {model_name}: {status}")
 
     # Load data
     test_items, few_shot_examples = load_data(args.input, args.n_per_type, args.seed)
