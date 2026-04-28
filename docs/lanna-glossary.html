@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>กำเมือง · Detailed Lanna Glossary · LannaBench</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@300;400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Cormorant+SC:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:     #faf6ee;
+  --paper2:    #f2ead8;
+  --paper3:    #e8ddc4;
+  --ink:       #18120a;
+  --ink2:      #352818;
+  --ink3:      #6a5038;
+  --ink4:      #a08868;
+  --gold:      #9a6e18;
+  --gold2:     #c49030;
+  --gold3:     #e8b84a;
+  --gold4:     #f8d87a;
+  --rule:      #cdbf9a;
+  --rule2:     #b8a87a;
+
+  --a:         #7a4010;   /* Layer A rust */
+  --a-bg:      #fdf6ee;
+  --a-rule:    #d4a880;
+  --b:         #1a5a48;   /* Layer B teal */
+  --b-bg:      #eef6f2;
+  --b-rule:    #90c8b0;
+  --c:         #38286a;   /* Layer C indigo */
+  --c-bg:      #f2f0f8;
+  --c-rule:    #b0a8d8;
+  --meta:      #5a3a1a;   /* Meta brown */
+  --meta-bg:   #faf2e8;
+  --meta-rule: #c8a878;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+/* ── grain texture ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  opacity: 0.45;
+}
+
+/* ── TOP RULE ── */
+.top-rule {
+  position: relative; z-index: 1;
+  height: 6px;
+  background: linear-gradient(90deg,
+    transparent 0%, var(--rule) 4%,
+    var(--gold2) 12%, var(--gold4) 28%,
+    var(--gold3) 44%, var(--gold4) 50%,
+    var(--gold3) 56%, var(--gold4) 72%,
+    var(--gold2) 88%, var(--rule) 96%, transparent 100%
+  );
+}
+
+/* ── MASTHEAD ── */
+.masthead {
+  position: relative; z-index: 1;
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  border-bottom: 1px solid var(--rule);
+}
+.mast-ornament {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 0.85rem;
+  color: var(--gold2);
+  letter-spacing: 0.6em;
+  display: block;
+  margin-bottom: 1.2rem;
+  opacity: 0.6;
+}
+.mast-title-thai {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 900;
+  color: var(--ink);
+  line-height: 1;
+  display: block;
+  margin-bottom: 0.3rem;
+  text-shadow: 1px 1px 0 var(--paper3);
+}
+.mast-title-en {
+  font-family: 'Cormorant SC', serif;
+  font-size: clamp(0.9rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  color: var(--ink3);
+  letter-spacing: 0.15em;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+.mast-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold2);
+  display: block;
+  margin-bottom: 2rem;
+}
+.mast-intro {
+  max-width: 64ch;
+  margin: 0 auto;
+  font-size: 1rem;
+  color: var(--ink3);
+  font-style: italic;
+  line-height: 1.8;
+}
+
+/* ── CHAPTER RULE ── */
+.chap-rule {
+  display: flex; align-items: center; gap: 0.8rem;
+  margin: 0 auto 2rem;
+  max-width: 900px; padding: 0 2rem;
+}
+.chap-rule::before, .chap-rule::after {
+  content: ''; flex: 1; height: 1px;
+}
+.chap-rule::before { background: linear-gradient(90deg, transparent, var(--rule2)); }
+.chap-rule::after  { background: linear-gradient(90deg, var(--rule2), transparent); }
+.chap-sym { font-family: 'Noto Serif Thai', serif; color: var(--gold2); font-size: 0.9rem; opacity: 0.7; }
+
+/* ── CHAPTER HEADER ── */
+.chapter {
+  position: relative; z-index: 1;
+  max-width: 900px; margin: 0 auto;
+  padding: 0 2rem 4rem;
+}
+.chapter + .chapter { border-top: 1px solid var(--rule); padding-top: 3rem; }
+
+.chap-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.chap-thai-big {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 4.5rem;
+  font-weight: 900;
+  line-height: 1;
+}
+.chap-a .chap-thai-big { color: var(--a); }
+.chap-b .chap-thai-big { color: var(--b); }
+.chap-c .chap-thai-big { color: var(--c); }
+.chap-meta .chap-thai-big { color: var(--meta); }
+
+.chap-info { }
+.chap-layer {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.chap-roman {
+  font-family: 'Cormorant SC', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 0.1rem;
+}
+.chap-a .chap-roman { color: var(--a); }
+.chap-b .chap-roman { color: var(--b); }
+.chap-c .chap-roman { color: var(--c); }
+.chap-meta .chap-roman { color: var(--meta); }
+
+.chap-meaning {
+  font-style: italic;
+  color: var(--ink3);
+  font-size: 1rem;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+.chap-pkg {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--ink4);
+  display: block;
+}
+.chap-desc {
+  font-size: 0.95rem;
+  color: var(--ink3);
+  line-height: 1.75;
+  font-style: italic;
+  border-left: 2px solid var(--rule2);
+  padding-left: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+
+/* ── ENTRY ── */
+.entry {
+  margin-bottom: 2.8rem;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 2rem;
+  align-items: start;
+  padding-bottom: 2.8rem;
+  border-bottom: 1px dashed var(--rule);
+}
+.entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.entry-left { text-align: right; padding-top: 0.2rem; }
+.entry-thai {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1.1;
+  display: block;
+}
+.entry-roman {
+  font-family: 'Cormorant SC', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--ink4);
+}
+.entry-file {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  display: block;
+  margin-top: 0.4rem;
+  color: var(--ink4);
+  line-height: 1.6;
+}
+.entry-formerly {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  color: var(--rule2);
+  display: block;
+  margin-top: 0.3rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* colour the thai per layer */
+.layer-a .entry-thai  { color: var(--a); }
+.layer-b .entry-thai  { color: var(--b); }
+.layer-c .entry-thai  { color: var(--c); }
+.layer-meta .entry-thai { color: var(--meta); }
+
+.entry-right { }
+.entry-function-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.entry-function-text {
+  font-family: 'Cormorant SC', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 1rem;
+  letter-spacing: 0.03em;
+}
+.entry-block {
+  margin-bottom: 1rem;
+}
+.entry-block-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+.entry-block p {
+  font-size: 0.94rem;
+  color: var(--ink2);
+  line-height: 1.75;
+}
+.entry-block p + p { margin-top: 0.5rem; }
+
+/* coloured left rule per block */
+.entry-block.cultural { border-left: 2px solid var(--rule2); padding-left: 0.9rem; }
+.entry-block.software { border-left: 2px solid var(--rule); padding-left: 0.9rem; }
+.layer-a .entry-block.cultural { border-color: var(--a-rule); }
+.layer-b .entry-block.cultural { border-color: var(--b-rule); }
+.layer-c .entry-block.cultural { border-color: var(--c-rule); }
+.layer-meta .entry-block.cultural { border-color: var(--meta-rule); }
+
+/* ── sub-section dividers inside chapters ── */
+.sub-head {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin: 2.5rem 0 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.sub-head::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 1;
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--rule);
+}
+.footer-thai {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 1.4rem;
+  color: var(--gold2);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.footer-note {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--ink4);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.footer-note a { color: var(--gold); text-decoration: none; }
+
+/* ── BOTTOM RULE ── */
+.bottom-rule {
+  position: relative; z-index: 1;
+  height: 6px;
+  background: linear-gradient(90deg, transparent 0%, var(--rule) 4%, var(--gold2) 12%, var(--gold4) 28%, var(--gold3) 44%, var(--gold4) 50%, var(--gold3) 56%, var(--gold4) 72%, var(--gold2) 88%, var(--rule) 96%, transparent 100%);
+}
+
+/* ── SCROLL FADE ── */
+.fade { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade.vis { opacity: 1; transform: translateY(0); }
+
+/* ── print ── */
+@media print {
+  body::before { display: none; }
+  .fade { opacity: 1; transform: none; }
+  .entry { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-rule"></div>
+
+<header class="masthead">
+  <span class="mast-ornament">❖ ❖ ❖</span>
+  <span class="mast-title-thai">กำเมือง</span>
+  <span class="mast-title-en">Detailed Lanna Glossary</span>
+  <span class="mast-sub">LannaBench · Lanna-3L NLP Benchmark · Paper 1</span>
+  <p class="mast-intro">Every module, package, and command in the LannaBench codebase carries an authentic Northern Thai name drawn from traditional craft, ceremony, and community life of the ancient Lanna Kingdom. This glossary documents the cultural origin and software function of each of the 28 Lanna mnemonic codenames.</p>
+</header>
+
+<!-- ═══════════════════════════════════════════════
+     LAYER PACKAGES
+════════════════════════════════════════════════ -->
+<div class="chapter chap-meta fade" id="packages">
+  <div class="chap-rule"><span class="chap-sym">❖</span></div>
+  <div class="chap-head">
+    <div class="chap-thai-big" style="color:var(--gold2)">ชั้น</div>
+    <div class="chap-info">
+      <span class="chap-layer">Layer Packages · CLI Commands · Pipeline Runner</span>
+      <span class="chap-roman" style="color:var(--gold2)">Layer Names</span>
+      <span class="chap-meaning">"The spaces and tools that define each layer of the framework"</span>
+      <span class="chap-pkg">Package directories · CLI entrypoints · Orchestrator</span>
+    </div>
+  </div>
+  <p class="chap-desc">The four layer names and the pipeline runner are the most visible Lanna terms in the codebase. They appear in every import statement, every CLI command, and every directory listing. Each is named after a Lanna space or tradition that mirrors its function.</p>
+
+  <!-- อูบ -->
+  <div class="entry layer-meta fade">
+    <div class="entry-left">
+      <span class="entry-thai">อูบ</span>
+      <span class="entry-roman">Oob</span>
+      <span class="entry-file">oob_meta/</span>
+      <span class="entry-formerly">formerly: lannakit / ab_meta</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Shared Utilities Package — Meta Container</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>อูบ is a specialised traditional lacquerware container primarily used for religious and ceremonial purposes in Lanna and Tai Khoen culture. It is crafted from woven bamboo, coated in layers of black lacquer, and decorated with intricate gold-leaf patterns (lai rot nam). Lanna households used it to store Buddhist manuscripts, ritual betel sets, or offerings for monks — precious, sacred items that must be preserved intact across generations. อูบคำ (Oob Kham) refers to the gold-gilded variety, considered the most prestigious form.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>The oob_meta package is the อูบ of the Lanna-3L framework. It holds and preserves all shared utilities: the schema definitions (ฮีต), run manifests (ปี้), deterministic seed manager (ข้าวตอก), I/O bridge (ปู่จ๋าน), and pipeline orchestration (ป่อหลวง). Like a ceremonial container that protects sacred items, this package safeguards the metadata and rules that ensure reproducibility and integrity across every layer of the benchmark.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ข่วง -->
+  <div class="entry layer-a fade">
+    <div class="entry-left">
+      <span class="entry-thai">ข่วง</span>
+      <span class="entry-roman">Khuang</span>
+      <span class="entry-file">lanna_khuang/<br>$ lanna-khuang</span>
+      <span class="entry-formerly">formerly: lannaforge</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Layer A — Data Foundation Package</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ข่วง refers to an open courtyard or public square — the foundational gathering space in front of a temple or palace (ข่วงหลวง). In Lanna communities, the ข่วง was the site of communal ceremonies, craft preparation, and daily life. Raw materials were laid out here, organised, and prepared before any craft began. It is the place where community starts.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>Layer A is the data foundation of the entire benchmark. Like the ข่วง, it is the open space where raw materials (the master Google Sheet) are laid out, organised, and prepared. Everything downstream — model runs, evaluations, error analyses — begins with what is built here. No other layer touches the raw data directly.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ครัวไฟ -->
+  <div class="entry layer-b fade">
+    <div class="entry-left">
+      <span class="entry-thai">ครัวไฟ</span>
+      <span class="entry-roman">Krua Fai</span>
+      <span class="entry-file">lanna_kruafai/<br>$ lanna-kruafai</span>
+      <span class="entry-formerly">formerly: lannasmith</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Layer B — Adaptation Toolkit Package</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ครัวไฟ is the traditional Lanna kitchen — not merely a cooking room but the spiritual and architectural heart of every Lanna home. It is named for the fire (ไฟ) that burns at its centre. Smoke, heat, and transformation happen here. Tools like ไหข้าว (the steamer), อั้งโล่ (the brazier), and กัวะ (the cooling tray) all live in the ครัวไฟ, each with a distinct role in turning raw rice into a finished meal.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>Layer B is the adaptation layer — where raw pretrained models are transformed through prompting and fine-tuning. Like the ครัวไฟ, it contains a set of complementary tools (ไหข้าว for templating, อั้งโล่ for fine-tuning, กัวะ for inference) that together constitute the full cooking process. No output leaves Layer B without passing through this kitchen.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- จ่อฟ้า -->
+  <div class="entry layer-c fade">
+    <div class="entry-left">
+      <span class="entry-thai">จ่อฟ้า</span>
+      <span class="entry-roman">Jor Fa</span>
+      <span class="entry-file">lanna_jorfa/<br>$ lanna-jorfa</span>
+      <span class="entry-formerly">formerly: lannascope</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Layer C — Diagnostic Evaluation Package</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>จ่อฟ้า is the sky-reaching finial mounted at the apex of a Lanna viharn (temple assembly hall) or bot (ordination hall). It is often carved from teak or gilded wood in the shape of a naga (mythical serpent) or flame, arching gracefully upward. It is a sacred symbol — the vertical axis that connects the earthly structure to the highest realms, a measuring rod of sacred aspiration.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>Layer C is the diagnostic layer — it reaches upward to measure model outputs against ideal benchmarks. Like the จ่อฟ้า that connects earth to heaven, this layer bridges the gap between what the model generated and what should have been said. It runs the full LannaDiagnos stack: automatic scoring, human evaluation, and error analysis.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ฟ้อน -->
+  <div class="entry layer-meta fade">
+    <div class="entry-left">
+      <span class="entry-thai">ฟ้อน</span>
+      <span class="entry-roman">Fon</span>
+      <span class="entry-file">$ lanna-fon run<br>--pipeline *.yaml</span>
+      <span class="entry-formerly">formerly: lanna run</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Pipeline Orchestrator — CLI Runner</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ฟ้อน is the overarching term for traditional Lanna folk dance, encompassing many styles: ฟ้อนเล็บ (fingernail dance), ฟ้อนเทียน (candle dance), ฟ้อนม่านมุ้ยเชียงตา. All share the same character — slow, graceful, serene movements reflecting the gentle spirit of the Northern people. Each step flows seamlessly into the next. The performance is complete only when every movement has been danced in sequence.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>ฟ้อน is the end-to-end pipeline runner. It reads a YAML pipeline file and orchestrates all layers in sequence — build → validate → infer → train → score → gap → facets → human → errors. Like a traditional dance, every step is performed in order, with grace. One command: <span style="font-family:'JetBrains Mono',monospace;font-size:0.8em">lanna-fon run --pipeline paper1_full.yaml</span>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LAYER A
+════════════════════════════════════════════════ -->
+<div class="chapter chap-a fade" id="layer-a">
+  <div class="chap-rule"><span class="chap-sym">❖</span></div>
+  <div class="chap-head">
+    <div class="chap-thai-big">ข่วง</div>
+    <div class="chap-info">
+      <span class="chap-layer">Layer A · lanna_khuang/ · $ lanna-khuang</span>
+      <span class="chap-roman">Data Foundation Toolkit</span>
+      <span class="chap-meaning">"Raw materials laid out, prepared, and poured into clean vessels"</span>
+      <span class="chap-pkg">5 modules · namton · huuk · tok · rak · tung</span>
+    </div>
+  </div>
+  <p class="chap-desc">Layer A converts the master Google Sheet into validated JSONL artifacts that every downstream layer consumes. It is the courtyard where the benchmark begins — raw data enters and structured, annotated, partitioned JSONL leaves. Bit-exact reproducibility: the same sheet snapshot and codebook version produce byte-identical JSONL.</p>
+
+  <!-- น้ำต้น -->
+  <div class="entry layer-a fade">
+    <div class="entry-left">
+      <span class="entry-thai">น้ำต้น</span>
+      <span class="entry-roman">Nam Ton</span>
+      <span class="entry-file">namton_builder.py</span>
+      <span class="entry-formerly">formerly: Anvil → salung</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">JSONL Builder — Master Sheet to Corpus</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>น้ำต้น is a traditional Lanna earthenware water pitcher with a bulbous body and a long, slender neck. Made from unglazed or semi-glazed terracotta, its porous clay allows for slight evaporation, keeping water naturally cool — a sustainable, elegant solution for the tropical climate. In the past, every Lanna home placed a น้ำต้น on a wooden stand at the front of the house, and passersby could drink freely from it. It was a symbol of hospitality, purity, and generous spirit. Wealthier households owned decorated varieties with celadon glaze (เซลาดอน) or gold-leaf carving (ลายคำ).</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>This module builds the JSONL corpus from the master Google Sheet export. Like the น้ำต้น, it takes raw water (the master sheet), cools and purifies it through transformation and validation, and pours out a clean, refreshing stream (JSONL) that all downstream layers — inference runners, evaluators, error analysts — can drink from freely. It is the first act of hospitality the benchmark offers to models and evaluators.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- หูก -->
+  <div class="entry layer-a fade">
+    <div class="entry-left">
+      <span class="entry-thai">หูก</span>
+      <span class="entry-roman">Huuk</span>
+      <span class="entry-file">huuk_validator.py</span>
+      <span class="entry-formerly">formerly: Loom</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Schema Validator — Loom-as-Gate</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>หูก is the traditional Lanna floor loom used to weave textiles, especially the intricate ซิ่น (tubular skirt) and ผ้าทอ (handwoven cloth) that are central to Northern Thai identity. The loom consists of a fixed warp (vertical threads) through which the weaver passes a weft (horizontal thread) in a precise pattern. Every thread must pass through the heddles in the correct order — one wrong thread breaks the entire pattern and requires unwinding the work back to the error.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>หูก validates the JSONL schema — every row must pass through it before any other layer is allowed to proceed. It is implemented as a "Loom-as-gate": every CLI entrypoint in every layer calls หูก on its input JSONL and refuses to proceed on violations. If a single row has a wrong field, a missing value, or a type mismatch, หูก surfaces a structured violation report (Loom.Report) and halts the pipeline. One wrong thread, and the whole pattern fails.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ตอก -->
+  <div class="entry layer-a fade">
+    <div class="entry-left">
+      <span class="entry-thai">ตอก</span>
+      <span class="entry-roman">Tok</span>
+      <span class="entry-file">tok_splitter.py</span>
+      <span class="entry-formerly">formerly: Cleaver</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Stratified Train / Dev / Test Partitioner</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ตอก is not a tool or a strip — it is the act itself: the deliberate action of splitting bamboo. A Lanna craftsperson ตอก by striking a blade along the grain of a bamboo culm, producing clean, even lengths for weaving baskets, making สาย (carrying poles), or constructing อูบ frames. The action must be decisive and precise — a hesitant or misdirected strike produces uneven strips that ruin the final weave. The action is irreversible; once split, it cannot be unsplit.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>ตอก is the act of partitioning — splitting the dataset into stratified train, dev, and test sets by data_type and context_dependence. Like the craftsperson's decisive strike, this split happens once and is permanent. The test split is locked before any model runs, never to leak. The partition manifest records the random seed (ข้าวตอก) and stratification keys so the exact same split can be reproduced on any machine.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- รัก -->
+  <div class="entry layer-a fade">
+    <div class="entry-left">
+      <span class="entry-thai">รัก</span>
+      <span class="entry-roman">Rak</span>
+      <span class="entry-file">rak_annotator.py</span>
+      <span class="entry-formerly">formerly: Quill</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Annotation Codebook Applicator</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>รัก (rak) is the tree sap used to make traditional Lanna lacquer (เครื่องเขิน). The craftsperson applies thin layers of black lacquer to a woven bamboo base — each coat adding depth, durability, and lustre. The process is slow and deliberate: each layer must dry completely before the next is applied. The final object — a lacquered bowl, box, or อูบ — is preserved for decades. The tree itself, Gluta usitata, was cultivated specifically for its sap in Lanna orchards.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>รัก applies the annotation codebook to each raw data row, coating it with a durable layer of pragmatic meaning: intent, tone, construction_type, and code_switch flag. Like the lacquer process, each annotation enriches and preserves the row for all downstream layers. The codebook version is stamped into each row's provenance block — so any future re-annotation can be traced exactly.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ตุง -->
+  <div class="entry layer-a fade">
+    <div class="entry-left">
+      <span class="entry-thai">ตุง</span>
+      <span class="entry-roman">Tung</span>
+      <span class="entry-file">tung_definer.py</span>
+      <span class="entry-formerly">formerly: Compass</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">LannaFacets Field Definitions — Single Source of Truth</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ตุง is a Lanna ritual flag or banner, an act of Buddhist devotion found throughout Northern Thailand. They come in many forms: ตุงไชย (long victory banners), ตุงไส้หมู (intricately cut paper banners), and ตุงกระด้าง (permanent metal or carved flags). All share one quality: they are planted in the ground or hung from a pole to mark direction, intention, and aspiration. A ตุง marks territory that is sacred — the flag's position is fixed and does not change.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>ตุง plants the 7 semantic flags that mark every dimension of the LannaFacets schema: intent, tone, construction_type, code_switch, data_type, context_dependence, and location. It is the single source of truth for all field definitions — no module defines facet fields anywhere else. Like the ตุง that marks the sacred ground, ตุง marks the precise semantic territory of the benchmark and never moves from its place.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LAYER B
+════════════════════════════════════════════════ -->
+<div class="chapter chap-b fade" id="layer-b">
+  <div class="chap-rule"><span class="chap-sym">❖</span></div>
+  <div class="chap-head">
+    <div class="chap-thai-big">ครัวไฟ</div>
+    <div class="chap-info">
+      <span class="chap-layer">Layer B · lanna_kruafai/ · $ lanna-kruafai</span>
+      <span class="chap-roman">Adaptation Toolkit</span>
+      <span class="chap-meaning">"The kitchen where raw models are transformed through fire and skill"</span>
+      <span class="chap-pkg">4 modules · khantok · haikhao · anglo · kua</span>
+    </div>
+  </div>
+  <p class="chap-desc">Layer B runs the LannaAdapt-s baseline matrix: 9 models × 3 conditions (zero-shot, few-shot, LoRA), with LoRA fine-tuning scoped to Typhoon2 only in Paper 1. All four modules live inside the ครัวไฟ and follow a coherent kitchen workflow: registry → steaming → firing → cooling.</p>
+
+  <!-- ขันโตก -->
+  <div class="entry layer-b fade">
+    <div class="entry-left">
+      <span class="entry-thai">ขันโตก</span>
+      <span class="entry-roman">Khan Tok</span>
+      <span class="entry-file">khantok_registry.py</span>
+      <span class="entry-formerly">formerly: Roster</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">9-Model Registry — dict[str, ModelSpec]</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ขันโตก is a traditional Lanna low-footed serving tray — a round lacquered pedestal used to present multiple dishes (rice, curry, side vegetables) together on a single raised surface for communal dining. The khantok meal (ขันโตกดินเนอร์) is one of the most iconic experiences of Northern Thai hospitality: guests sit on the floor around the tray, and every dish is presented together. No dish is hidden; all are offered at once for the community to share.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>ขันโตก holds the 9-model registry as a dict[str, ModelSpec]. All nine models — GPT-4o, Gemini 2.0 Flash, Claude Sonnet, DeepSeek-V3, Typhoon-S-ThaiLLM, Typhoon2, SeaLLM, Llama 3.1 8B, and Qwen2.5 — are presented on one tray. It is the only place in the codebase where model specifications (type, developer, fine-tunable flag, role) live. The inference runner (กัวะ) and fine-tuner (อั้งโล่) both read from ขันโตก.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ไหข้าว -->
+  <div class="entry layer-b fade">
+    <div class="entry-left">
+      <span class="entry-thai">ไหข้าว</span>
+      <span class="entry-roman">Hai Khao</span>
+      <span class="entry-file">hai_khao_templater.py</span>
+      <span class="entry-formerly">formerly: Stencil → chalu</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Prompt Templater — System Prompt + Few-Shot Assembly</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ไหข้าว is the traditional Lanna sticky rice steamer — a cylindrical vessel placed atop a clay pot (หม้อข้าวม้า) of boiling water. A woven bamboo cone (วอล, Wual) inside holds soaked sticky rice off the water's surface, allowing steam to rise through and cook it evenly from below. Three types exist: carved teak (ไม้จริง), bamboo tube (กระบอกไม้ไผ่), and woven bamboo (ไม้ไผ่สาน). The ไหข้าว is inseparable from the ครัวไฟ — Lanna life without sticky rice is unimaginable.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>ไหข้าว is the prompt templater — the only place in the codebase where prompts are constructed. It takes a soaked base template (system message + placeholder slots) and applies controlled steam (variable insertion, few-shot example assembly, direction conditioning) to produce a fully cooked prompt string, ready for the model. Like the steamer transforms raw rice into fluffy sticky rice, this module transforms raw templates into structured prompt strings the model can digest. Paper 1 uses three prompt variants (3P): Thai natural / English instructional / Thai question form.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- อั้งโล่ -->
+  <div class="entry layer-b fade">
+    <div class="entry-left">
+      <span class="entry-thai">อั้งโล่</span>
+      <span class="entry-roman">Ang Lo</span>
+      <span class="entry-file">ang_lo_finetuner.py</span>
+      <span class="entry-formerly">formerly: Bellows → sin</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">LoRA Fine-Tuner — PEFT + TRL — Typhoon2 Only (Paper 1)</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>อั้งโล่ is a traditional portable charcoal brazier — a clay stove used throughout Lanna kitchens and street-food stalls for cooking that requires sustained, adjustable heat: simmering curries (แกง), making ออม (slow-cooked broth with vegetables), or frying. Unlike a roaring wood fire, the อั้งโล่ uses charcoal to produce a steady, low-to-medium heat that can be regulated by controlling airflow. It is patient heat — low, long, infusing deep flavour into whatever it cooks. It is the heart of the kitchen's sustained energy.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>อั้งโล่ performs LoRA fine-tuning on Typhoon2. Like the brazier, it applies low, steady heat (gradient updates) over many training steps to infuse dialect knowledge into the base model. The heat is controlled (learning rate scheduler), never burns the base (low-rank adaptation prevents catastrophic forgetting), and produces a lightweight, portable adapter (LoRA weights) that can be attached to any inference run. Paper 1 settings: PEFT + TRL, r=8, α=16, no DoRA, no NEFTune.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- กัวะ -->
+  <div class="entry layer-b fade">
+    <div class="entry-left">
+      <span class="entry-thai">กัวะ</span>
+      <span class="entry-roman">Kua</span>
+      <span class="entry-file">kua_inference/<br>api.py · vllm.py</span>
+      <span class="entry-formerly">formerly: Forgehammer → mui</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Inference Runner — Frontier APIs + Open-Weights via vLLM</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>กัวะ (กัวะข้าว) is a traditional Lanna wooden tray used to cool and toss freshly steamed sticky rice immediately after it comes out of the ไหข้าว. The rice is spread across the wide, shallow surface and tossed with a wooden paddle (ไม้พาย) — a fast, light, aerating action that releases steam, cools the grains, and achieves the perfect chewy, non-soggy texture. It is carved from a single piece of teak or rain tree (ไม้จามจุรี), sanded smooth. The กัวะ transforms cooked rice into a ready-to-serve dish in seconds.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>กัวะ is the inference runner — the final transformation before output is served to evaluation. It takes a fully prepared prompt (output from ไหข้าว) and passes it through the model in a single, fast forward pass — like tossing rice on the kua. No weights are updated; no heat is applied. It simply generates outputs that are served to the evaluation layer (จ่อฟ้า). Covers frontier provider APIs (OpenAI, Anthropic, Google, DeepSeek) via kua/api.py and open-weights models via vLLM in kua/vllm.py. Retries on 429/5xx with exponential backoff.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LAYER C
+════════════════════════════════════════════════ -->
+<div class="chapter chap-c fade" id="layer-c">
+  <div class="chap-rule"><span class="chap-sym">❖</span></div>
+  <div class="chap-head">
+    <div class="chap-thai-big">จ่อฟ้า</div>
+    <div class="chap-info">
+      <span class="chap-layer">Layer C · lanna_jorfa/ · $ lanna-jorfa</span>
+      <span class="chap-roman">Diagnostic Toolkit</span>
+      <span class="chap-meaning">"Reaching skyward to measure the distance between earth and heaven"</span>
+      <span class="chap-pkg">8 modules · satu · traiphum · kaew · pong · tae · bailan · hompoi · kalae</span>
+    </div>
+  </div>
+  <p class="chap-desc">Layer C runs the full LannaDiagnos stack across three sub-layers: Automatic Diagnostics (Triple-ChrF, Gap Score, LannaFacets), Human Diagnostics (evaluation forms, inter-rater agreement), and Error Analysis. It consumes Layer B's outputs and Layer A's references.</p>
+
+  <div class="sub-head">① Automatic Diagnostics</div>
+
+  <!-- สาธุ -->
+  <div class="entry layer-c fade">
+    <div class="entry-left">
+      <span class="entry-thai">สาธุ</span>
+      <span class="entry-roman">Sathu</span>
+      <span class="entry-file">satu_robustness.py</span>
+      <span class="entry-formerly">formerly: Trident</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">3P Prompt Robustness Harness — Single Source of Truth for Prompts</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>สาธุ (Pali: sādhu) is a solemn Pali word used as "amen" or an expression of deep affirmation in Lanna Buddhist chanting. When a monk concludes a chant or recites the Dhamma, the congregation responds with three rhythmic สาธุ, สาธุ, สาธุ — each repetition reinforcing the truth of what was spoken. It is an act of collective agreement, not passive acknowledgement but active affirmation spoken three times in succession.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>สาธุ runs the 3P Prompt Robustness protocol and is the single source of truth for all prompt variants. It holds PROMPTS["ntd2std"] and PROMPTS["std2ntd"] as the canonical three-prompt lists. Three affirmations: prompt variant 1 (Thai natural phrasing), variant 2 (English instructional), variant 3 (Thai question form). Every model × condition run passes all three prompts, producing three hypotheses per item for the Lanna MultiRef scorer.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ไตรภูมิ -->
+  <div class="entry layer-c fade">
+    <div class="entry-left">
+      <span class="entry-thai">ไตรภูมิ</span>
+      <span class="entry-roman">Trai Phum</span>
+      <span class="entry-file">traiphum_multiref.py</span>
+      <span class="entry-formerly">formerly: Triplet</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Lanna MultiRef Scorer — 3 Hypotheses × 3 References = 9 ChrF Values</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ไตรภูมิ (Traiphum, from Pali: ti-bhūmi) is the traditional Lanna/Thai Buddhist cosmology of three realms of existence: สวรรค์ (heaven — the realm of devas and celestial beings), มนุษย์โลก (the human world — earth), and นรก (the underworld — the realm of suffering). Each realm is a complete and distinct plane with its own rules, inhabitants, and conditions. The Traiphum Phra Ruang, one of the most important texts of classical Lanna literature, describes the full cosmology in vivid detail.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>ไตรภูมิ scores each hypothesis against three references — measuring across three realms of possible correct translation. With 3 hypotheses (from สาธุ's 3P prompts) and 3 references (multi-annotator gold translations), it computes a 3×3 = 9 ChrF value matrix per item using sacrebleu.sentence_chrf. These 9 values are passed to แก้ว for aggregation. The three scores are like the three realms: the top (max), the middle (avg), and the gap below (diff).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- แก้ว -->
+  <div class="entry layer-c fade">
+    <div class="entry-left">
+      <span class="entry-thai">แก้ว</span>
+      <span class="entry-roman">Kaew</span>
+      <span class="entry-file">kaew_aggregator.py</span>
+      <span class="entry-formerly">formerly: Prism</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Triple-ChrF Aggregator — {chrf_max · chrf_avg · chrf_diff}</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>แก้ว means crystal or gemstone in Thai — clarity, purity, and refraction. In Lanna Buddhist traditions, แก้ว is also a sacred title: the Triple Gem (ไตรรัตน์) consists of the Buddha (พระพุทธ), the Dhamma (พระธรรม), and the Sangha (พระสงฆ์) — referred to collectively as the three แก้ว. A crystal or gemstone refracts white light into a spectrum of distinct wavelengths, revealing the hidden structure within the undivided whole.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>แก้ว aggregates the 9 ChrF values from ไตรภูมิ into the Triple-ChrF trio. chrf_max is the optimistic ceiling (best-of-3-prompts × best-of-3-refs), chrf_avg is the expected performance metric (the primary evaluation number), and chrf_diff = chrf_max − chrf_avg measures prompt sensitivity. The module sorts scores before aggregating to ensure floating-point summation stability across runs. Like a crystal refracting light into three bands, แก้ว reveals the three distinct dimensions of model performance.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ป่อง -->
+  <div class="entry layer-c fade">
+    <div class="entry-left">
+      <span class="entry-thai">ป่อง</span>
+      <span class="entry-roman">Pong</span>
+      <span class="entry-file">pong_gap.py</span>
+      <span class="entry-formerly">formerly: Caliper</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Dialect Gap Score G — Headline Benchmark Metric</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ป่อง refers to a gap, cleft, or visible interval — the space between woven strips of bamboo in a แตะ panel, or the opening between two structural elements. In Lanna architecture and basketry, ป่อง is not an absence but a functional interval: the gap allows airflow, light passage, and structural flexibility. It is the measurable space between two defined points.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>ป่อง computes the headline metric of the entire LannaBench benchmark: G = chrf_avg(STD) − chrf_avg(NTD). This Dialect Gap Score measures how much harder each model finds Northern Thai dialect compared to Standard Thai. A higher G indicates greater difficulty with dialect. The best zero-shot model on Task 1 by chrf_avg is selected for human evaluation, alongside Typhoon2 LoRA. ป่อง is not itself a tool but the measurement — the gap that defines the benchmark's central claim.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- แตะ -->
+  <div class="entry layer-c fade">
+    <div class="entry-left">
+      <span class="entry-thai">แตะ</span>
+      <span class="entry-roman">Tae</span>
+      <span class="entry-file">tae_slicer.py</span>
+      <span class="entry-formerly">formerly: Lattice</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">LannaFacets Slice Analyzer — 7 Metadata Axes</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>แตะ is a woven bamboo panel made from flat, split bamboo strips (ตอก) interlaced at right angles. Traditionally used in Lanna construction as fencing (รั้วแตะ), wall material (ฝาแตะ), temporary walkways, or as a drying rack (แตะตากยาสูบ) for tobacco leaves and agricultural produce. The gaps between the woven strips allow excellent air circulation, preventing the produce from clumping — each cell is distinct, ventilated, and separated from its neighbour.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>แตะ slices per-row Triple-ChrF scores by all 7 LannaFacets metadata axes defined in ตุง: intent, tone, construction_type, code_switch, data_type, context_dependence, and location. Each gap between the woven strips is a distinct facet cell (e.g., tone=polite_female, construction_type=CNC), preventing category mixing. แตะ emits one markdown table per facet axis per (model, condition) combination, enabling fine-grained analysis of where each model struggles.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-head">② Human Diagnostics</div>
+
+  <!-- ใบลาน -->
+  <div class="entry layer-c fade">
+    <div class="entry-left">
+      <span class="entry-thai">ใบลาน</span>
+      <span class="entry-roman">Bai Lan</span>
+      <span class="entry-file">bailan_form.py</span>
+      <span class="entry-formerly">formerly: Slate</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Human Evaluation Form Generator — T3 + T4 · Best Model + Typhoon2 LoRA</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ใบลาน (bai lan, from Sanskrit tāla-patra — palm leaf) is the traditional medium for recording Lanna Buddhist scriptures, legal texts, chronicles (พงศาวดาร), and ceremonial chants. Thin strips of talipot palm leaf are soaked, pressed flat, ruled, and inscribed with iron styluses in the ancient Tai Tham (ล้านนา) script. Once inscribed, the manuscript is tied with thread and stored in a decorated box (ปัจจุบัน) or อูบ. ใบลาน manuscripts in the Chiang Mai National Museum date back over 500 years.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>ใบลาน generates human evaluation forms for T3 (single-post response) and T4 (threaded response), applied to the best zero-shot model and Typhoon2 LoRA. Each form covers 100 items × 3 annotators, scoring Generation (0/1), Fluency (1–5), Tone Preservation (1–5), Pragmatic Appropriateness (1–5), Naturalness (1–5), and Construction Preservation (1–5). Output is either standalone HTML or a Label Studio configuration. The form includes provenance metadata for each item so annotators see the source context.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ฮอมปอย -->
+  <div class="entry layer-c fade">
+    <div class="entry-left">
+      <span class="entry-thai">ฮอมปอย</span>
+      <span class="entry-roman">Hom Poi</span>
+      <span class="entry-file">hompoi_agreement.py</span>
+      <span class="entry-formerly">formerly: Concord</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Krippendorff's α — Inter-Rater Agreement — Per-Axis</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ฮอมปอย breaks into two words: ฮอม (to gather, collect, donate together) and ปอย (a festive ceremony or merit-making event — e.g., ปอยหลวง, the grand festival for temple renovation). Together, ฮอมปอย is the Lanna tradition of communal contribution — villagers pooling money, rice, crops, or labour to support a neighbour's or temple's merit-making. It embodies unity, mutual aid, and shared effort. In a ขบวนฮอมปอย procession, villagers in traditional dress carry their offerings together to the temple.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>ฮอมปอย computes Krippendorff's α (via simpledorff) measuring how well the annotator community pools their judgments into a shared reliability score. It reports α per axis: Generation, Fluency, Tone Preservation, Pragmatic Appropriateness, Naturalness, and Construction Preservation. High α means the community has successfully "carried the festival together" — their judgments harmonise. A 20% shared item subset among the 3 annotators enables the inter-rater calculation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-head">③ Error Analysis</div>
+
+  <!-- กาแล -->
+  <div class="entry layer-c fade">
+    <div class="entry-left">
+      <span class="entry-thai">กาแล</span>
+      <span class="entry-roman">Kalae</span>
+      <span class="entry-file">kalae_error.py</span>
+      <span class="entry-formerly">formerly: Sieve → hae</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Error Analysis Guardian — worst-k · tone-flip · CD-drop · construction-loss</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>กาแล is the most iconic architectural feature of a traditional Northern Thai Lanna house (เรือนกาแล) — a pair of carved wooden planks crossing above the gable (หน้าจั่ว), extending upward in a V or X shape. It is not mounted on the temple roof but above the gable peak of a private dwelling. Theories about its origin include: deterring large birds (crows, vultures) from perching on the roof ridge (a sign of bad luck), symbolising water buffalo horns (reflecting the agrarian culture), and acting as a spiritual guardian protecting residents from evil spirits entering through the roof. Kalae are often masterpieces of wood carving — teak or Burma sal, carved with ลายกนก (flame patterns) or cloud motifs.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>กาแล guards the benchmark's reliability by standing watch over all evaluation outputs and filtering out the harmful cases. It surfaces: worst-k rows by chrf_avg (bottom-10 per model/condition, appendix-ready), prompt-sensitivity outliers (rows with high chrf_diff), tone-flip failures (tone preservation ≤ 2 with Generation = 1), construction-loss cases (CNC partition with construction preservation ≤ 2), and CD-drop (mean chrf_avg gap between context-dependent and independent items per model). Like the กาแล standing above the roofline, it protects the house of evaluation from contamination.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     META
+════════════════════════════════════════════════ -->
+<div class="chapter chap-meta fade" id="meta">
+  <div class="chap-rule"><span class="chap-sym">❖</span></div>
+  <div class="chap-head">
+    <div class="chap-thai-big">อูบ</div>
+    <div class="chap-info">
+      <span class="chap-layer">Utilities · oob_meta/ · shared across all layers</span>
+      <span class="chap-roman">Shared Utilities Package</span>
+      <span class="chap-meaning">"The ceremonial container that holds what is most sacred"</span>
+      <span class="chap-pkg">5 modules · pujan · poluang · khaotok · pee · heet</span>
+    </div>
+  </div>
+  <p class="chap-desc">The oob_meta package is imported by every layer. It holds the shared infrastructure: data schemas, run manifests, seed management, I/O operations, and pipeline orchestration. Like the ceremonial อูบ container, it safeguards the rules and metadata that ensure reproducibility and integrity across the entire benchmark.</p>
+
+  <!-- ปู่จ๋าน -->
+  <div class="entry layer-meta fade">
+    <div class="entry-left">
+      <span class="entry-thai">ปู่จ๋าน</span>
+      <span class="entry-roman">Pu Jan</span>
+      <span class="entry-file">pujan_io.py</span>
+      <span class="entry-formerly">formerly: io.py</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">JSONL I/O Bridge — Read · Write · SHA-256 Hashing</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ปู่จ๋าน (Pu Jan) is a Lanna title for a lay minister or acolyte (also known as Mukkanayok or Waiyawatchakon) — a respected community figure who serves as the bridge between the temple and the villagers. He is often a former monk with deep knowledge of Buddhist scriptures and the ancient Tai Tham (Lanna) script. He is a ceremonial leader (expert in rituals such as Sueb Chata, the life-prolonging ceremony), a knowledge holder, and a community coordinator — managing temple events and facilitating communal merit-making such as ฮอมปอย. He facilitates the exchange between two realms: the sacred space of the temple and the daily world of the villagers.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>ปู่จ๋าน handles all JSONL read and write operations and computes SHA-256 hashes for every input and output file. It is the bridge that carries data between the filesystem and all layers — the only module that touches data files directly. Every read operation returns typed Pydantic objects (ฮีต schemas); every write operation stamps the output with a ปี้ manifest. Layer A builds through ปู่จ๋าน; Layer B consumes and writes through ปู่จ๋าน; Layer C reads through ปู่จ๋าน.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ป่อหลวง -->
+  <div class="entry layer-meta fade">
+    <div class="entry-left">
+      <span class="entry-thai">ป่อหลวง</span>
+      <span class="entry-roman">Po Luang</span>
+      <span class="entry-file">poluang_orchestrate.py</span>
+      <span class="entry-formerly">formerly: orchestrate.py</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Pipeline Coordinator — YAML Reader · Stage Sequencer</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ป่อหลวง (พ่อหลวง in Central Thai) is the Northern Thai term for the village headman — the official village chief (ผู้ใหญ่บ้าน). As the name suggests ("father of the village"), the ป่อหลวง acts as a fatherly figure: settling disputes, overseeing welfare, leading community events, and serving as the official liaison between government administration and local villagers. His word carries authority in the community; when the ป่อหลวง calls for a communal activity, the village follows.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>ป่อหลวง reads the pipeline YAML file and coordinates all layer stages in sequence, passing ปี้ manifest IDs between steps. It is the internal entrypoint behind the ฟ้อน CLI — ฟ้อน dances, ป่อหลวง leads. It does not perform any layer's work itself; it calls each CLI stage in the declared order, verifies outputs, and threads context through. Cross-stage dependencies (after: [...]) are resolved before execution.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ข้าวตอก -->
+  <div class="entry layer-meta fade">
+    <div class="entry-left">
+      <span class="entry-thai">ข้าวตอก</span>
+      <span class="entry-roman">Khao Tok</span>
+      <span class="entry-file">khaotok_seed.py</span>
+      <span class="entry-formerly">formerly: loomstone → mahin</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Deterministic Seed Manager — seed_all(42) — numpy · torch · random · transformers</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ข้าวตอก is popped rice — made by heating unhulled paddy (rice with husk) until the grain pops out in a process similar to popcorn: a deterministic transformation from a single dense grain to a light, airy bloom. In Lanna culture, ข้าวตอก is sacred. As part of the "Khao Tok Dok Mai" set, it is offered to the Triple Gem and used in ceremonies such as Sueb Chata. The ปู่จ๋าน (lay minister) sprinkles ข้าวตอก during rituals — tossing the grains to spread prosperity, purity, and "blooming" luck across the gathering. ข้าวตอกตุง: in Yi Peng and Poi Luang festivals, individual popped grains are threaded onto strings to create long, delicate white banners (ตุง) that flutter in the temple grounds.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>ข้าวตอก manages deterministic randomness across the entire benchmark. Like a single grain of rice that always pops into the same shape under the same heat, a fixed seed value produces identical random sequences across all runs. seed_all(42) sprinkles randomness throughout the system: shuffling train/dev/test partitions (ตอก), sampling dev sets, initialising model weights for LoRA fine-tuning (อั้งโล่), and shuffling batch order in vLLM. The seed is surfaced in the ปี้ manifest of every run.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ปี้ -->
+  <div class="entry layer-meta fade">
+    <div class="entry-left">
+      <span class="entry-thai">ปี้</span>
+      <span class="entry-roman">Pee</span>
+      <span class="entry-file">pee_manifest.py</span>
+      <span class="entry-formerly">formerly: manifest.py</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Run Manifest — Config · SHA-256 · Git SHA · Tooling · Hardware</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ปี้ is a small mark, tag, or stamp of identity — a token placed on an object to record provenance, ownership, or certification. In traditional Lanna markets and temples, a ปี้ was inscribed on valuable goods, offerings, or documents to identify their origin. The ปี้ is the smallest unit of recorded identity: not a full document, but a mark that answers the question "where did this come from, and is it authentic?"</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>Every experiment run produces a ปี้: a JSON manifest file stamped with: manifest_id (ISO-8601 timestamp + 6-char git SHA), git_sha and git_dirty flag, stage name, full config, SHA-256 of every input file, SHA-256 of every output file, tooling versions (Python, torch, sacrebleu, vllm, transformers), and hardware (GPU model, n_gpus). No output file is accepted by any downstream layer unless its ปี้ resolves to a manifest on disk. Cross-run merges require --cross-run.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ฮีต -->
+  <div class="entry layer-meta fade">
+    <div class="entry-left">
+      <span class="entry-thai">ฮีต</span>
+      <span class="entry-roman">Heet</span>
+      <span class="entry-file">heet_schema.py</span>
+      <span class="entry-formerly">formerly: schema.py</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">Pydantic Data Schemas — DatasetRow · TrainingRow · OutputRow · Annotation · Provenance</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ฮีต (from Pali charita, meaning conduct or behaviour) refers to the customary moral codes, traditions, and unwritten laws that govern Lanna community life — passed down through generations not as written legislation but as lived practice. The phrase "ฮีตสิบสอง คองสิบสี่" (twelve customary practices, fourteen behavioural codes) encapsulates the traditional Lanna social framework. ฮีต represents the "right way" of living: not merely rules but the deep cultural intuition of what is correct, appropriate, and true.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>ฮีต defines the Pydantic schemas that enforce the right structure for every data object in the system: DatasetRow, TrainingRow, OutputRow, Annotation, and Provenance. It is imported by every other module — the foundation of the entire type system. Every public function in the codebase accepts and returns ฮีต types or pathlib.Path objects. No raw dicts at boundaries. No row is accepted by the หูก validator unless it follows the ฮีต of the benchmark. This is the customary law that all data must obey.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     OPTIONAL: ใบยอก
+════════════════════════════════════════════════ -->
+<div class="chapter chap-meta fade" id="optional">
+  <div class="chap-rule"><span class="chap-sym">❖</span></div>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink4);margin-bottom:1.5rem;">Supporting Data Asset (Optional)</div>
+  <div class="entry layer-meta fade" style="border-bottom:none;margin-bottom:0;padding-bottom:0;">
+    <div class="entry-left">
+      <span class="entry-thai">ใบยอก</span>
+      <span class="entry-roman">Bai Yok</span>
+      <span class="entry-file">baiyok_glossary.csv</span>
+      <span class="entry-formerly">data asset, not a module</span>
+    </div>
+    <div class="entry-right">
+      <span class="entry-function-label">Software function</span>
+      <span class="entry-function-text">NTD–STD Word List — RAG Support (Paper 2) · Particle Detection (Paper 3)</span>
+      <div class="entry-block cultural">
+        <span class="entry-block-label">Cultural origin</span>
+        <p>ใบยอก (bai yok, from Pali yoka — recitation) refers to a Lanna palm-leaf manuscript used specifically to list vocabulary, chanting terms, or sacred word registers — a reference leaf for practitioners learning the Tai Tham script or ritual pronunciation. Distinct from ใบลาน (a blank writing surface), ใบยอก is already inscribed: a structured word list to be consulted, not written upon.</p>
+      </div>
+      <div class="entry-block software">
+        <span class="entry-block-label">Software mapping</span>
+        <p>ใบยอก is a 120-row CSV word list mapping Northern Thai Dialect (NTD) terms to Standard Thai (STD) equivalents, with grammatical notes. It is not a code module but a supporting data asset. In Paper 2 (LannaLift), it is used as a retrieval-augmented generation (RAG) glossary — retrieved as in-context hints during inference. In Paper 3 (LannaCxG), it serves as a particle and construction marker reference for grammatical analysis.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="fade">
+  <span class="footer-thai">สืบสานวัฒนธรรมล้านนาผ่านกำเมือง</span>
+  <p class="footer-note">LannaBench · Northern Thai Dialect NLP Benchmark · Paper 1 · 28 Lanna Codenames<br>
+  <a href="https://nsanitdee.github.io/northern-thai-llm/">nsanitdee.github.io/northern-thai-llm</a></p>
+</footer>
+
+<div class="bottom-rule"></div>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
